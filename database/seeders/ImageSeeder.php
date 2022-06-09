@@ -17,10 +17,8 @@ class ImageSeeder extends Seeder
     public function run()
     {
         $posts = Post::all();
-//        foreach($posts as $post ){
-//
-//        }
-        $posts->each(function ($post) {
+
+        $posts->each(function ($post){
             Image::factory(rand(0,3))->create(['post_id' => $post->id]);
         });
     }

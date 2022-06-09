@@ -17,33 +17,35 @@
                 </p>
             @endif
             @if($user->profile->bio)
-                <p class="text-muted">
-                    <b>Bio:</b>
-                    {{$user->profile->bio}}
-                </p>
-            @endif
-            @if($user->profile->birthdate)
-                <p class="text-muted">
-                    <b>Birth day:</b>
-                    {{$user->profile->birthdate->format('Y-m-d')}}
-                </p>
-            @endif
+                    <p class="text-muted">
+                        <b>Bio:</b>
+                        {{$user->profile->bio}}
+                    </p>
+                @endif
+                @if($user->profile->birthdate)
+                    <p class="text-muted">
+                        <b>Birth day:</b>
+                        {{$user->profile->birthdate->format('Y-m-d')}}
+                    </p>
+                @endif
         @endif
         <a href="{{route('user.follow', ['user' => $user])}}" class="btn btn-primary">
-            @if($user->amFollowing)
-                Unfollow
-            @else
-                Follow
-            @endif
+        @if($user->amFollowing)
+            Unfollow
+        @else
+            Follow
+        @endif
         </a>
-
             <ul>
                 @foreach($user->followers as $follower)
                     <li>{{$follower->name}}</li>
                 @endforeach
             </ul>
     </div>
+
 </div>
-
+<br>
+<div>
+    @include('userPosts')
+</div>
 @endsection
-

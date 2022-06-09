@@ -19,11 +19,11 @@ class PostSeeder extends Seeder
     {
         $users = User::all();
         $tags = Tag::all();
-        Post::factory(100)->make()->sortBy('created_at')->each(function(Post $post) use ($users, $tags){
+        Post::factory(100)->make()->sortBy('created_at')->each(function( Post $post) use ($users, $tags){
             $postTags = $tags->shuffle()->take(rand(0,4));
             $post->user()->associate($users->random());
             $post->save();
-            foreach($postTags as $tag){
+            foreach ($postTags as $tag){
                 $post->tags()->attach($tag);
             }
         });

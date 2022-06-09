@@ -11,13 +11,12 @@ use Illuminate\Support\Facades\Auth;
 class FollowController extends Controller
 {
    public function follow(User $user){
-       $follow = Auth::user()->follows()->where('user_id', $user->id)->first();
-       if($follow){
-           Auth::user()->follows()->detach($user);
-       } else {
-           Auth::user()->follows()->attach($user);
-       }
-
-       return redirect()->back();
+      $follow = Auth::user()->follows()->where('user_id',$user->id)->first();
+      if($follow){
+          Auth::user()->follows()->detach($user);
+      }else{
+          Auth::user()->follows()->attach($user);
+      }
+      return redirect()->back();
    }
 }

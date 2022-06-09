@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+
 /**
  * App\Models\Post
  *
@@ -46,10 +47,9 @@ class Post extends Model
 {
     use HasFactory, HasSlug;
 
-    protected $fillable = ['title', 'body'];
+    protected $fillable = ['title','body'];
 
     protected $dates = ['published_at'];
-
 
     /**
      * Get the options for generating the slug.
@@ -82,9 +82,11 @@ class Post extends Model
     public function tags(){
         return $this->belongsToMany(Tag::class);
     }
+
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+
     public static function published(){
         return self::whereNotNull('published_at');
     }
@@ -93,23 +95,17 @@ class Post extends Model
         return self::whereNull('published_at');
     }
 
-    public function getDisplayBodyAttribute(){
-        return nl2br($this->body);
-    }
+   public function getDisplayBodyAttribute(){
+       return nl2br($this->body);
+   }
 
     public function getSnippetAttribute(){
         return explode("\n\n", $this->body)[0];
     }
 
-    /**
-     * The "booted" method of the model.
-     *
-     * @return void
-     */
-    protected static function booted()
-    {
-        static::deleting(function ($post) {
-            foreach ($post->images as $image) {
+    protected static function booted(){
+        static::deleting(function($post){
+            foreach ($post->images as $image){
                 Storage::delete($image->path);
             }
         });

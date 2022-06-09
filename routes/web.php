@@ -15,22 +15,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [PublicController::class, 'home'])->name('home'); // '\App\Http\Controllers\PublicController'
+Route::get('/',[PublicController::class, 'home'])->name('home');
 Route::get('/posts', [PublicController::class, 'posts'])->name('posts'); // '\App\Http\Controllers\PublicController'
-Route::get('/posts/tag/{tag}', [PublicController::class, 'tag'])->name('tag');
-Route::get('/posts/{post}', [PublicController::class, 'post'])->name('post');
+Route::get('/posts/tag/{tag}',[PublicController::class, 'tag'])->name('tag');
+Route::get('/posts/{post}',[PublicController::class, 'post'])->name('post');
 Route::get('/users/{user}', [PublicController::class, 'user'])->name('user');
 Route::get('/users/{user}/follow', [\App\Http\Controllers\FollowController::class, 'follow'])->name('user.follow');
 
-Route::middleware('auth')->group(function() {
-    Route::post('/posts/{post}', [\App\Http\Controllers\CommentController::class, 'store'])->name('post.comment');
-
+Route::middleware('auth')->group(function(){
+    Route::post('/posts/{post}',[\App\Http\Controllers\CommentController::class, 'store'])->name('post.comment');
     Route::get('/admin/posts', [PostController::class,'index'])->name('admin.posts.index');
-    Route::get('/admin/posts/create', [PostController::class,'create'])->name('admin.posts.create');
-    Route::post('/admin/posts', [PostController::class,'store'])->name('admin.posts.store');
-    Route::get('/admin/posts/{post}/edit', [PostController::class,'edit'])->name('admin.posts.edit');
-    Route::put('/admin/posts/{post}', [PostController::class,'update'])->name('admin.posts.update');
-    Route::delete('/admin/posts/{post}', [PostController::class,'destroy'])->name('admin.posts.destroy');
+    Route::get('/admin/posts/create',[PostController::class,'create'])->name('admin.posts.create');
+    Route::post('/admin/posts',[PostController::class,'store'])->name('admin.posts.store');
+    Route::get('/admin/posts/{post}/edit',[PostController::class,'edit'])->name('admin.posts.edit');
+    Route::put('/admin/posts/{post}',[PostController::class,'update'])->name('admin.posts.update');
+    Route::get('/admin/posts/{post}/show',[PostController::class,'show'])->name('admin.posts.show');
+    Route::delete('/admin/posts/{post}',[PostController::class,'destroy'])->name('admin.posts.destroy');
 });
 
 Auth::routes();

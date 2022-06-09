@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class UpdatePostRequest extends FormRequest
 {
@@ -15,13 +13,13 @@ class UpdatePostRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user() == $this->route('post')->user;
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function rules()
     {

@@ -15,20 +15,24 @@ class PublicController extends Controller
 
     public function posts(){
         $posts = Post::published()->latest()->paginate(12);
-
+//        dd($posts);
 //        dd($posts->toArray());
-        return view('posts', compact('posts'));
+        return view('posts',compact('posts'));
     }
+
     public function tag($tag){
         $tag = Tag::where('name', $tag)->firstOrFail();
         $posts = $tag->posts()->whereNotNull('published_at')->latest()->paginate(12);
-        return view('posts', compact('posts'));
+        return view('posts',compact('posts'));
     }
 
     public function post(Post $post){
-        return view('post', compact('post'));
+        return view('post',compact('post'));
     }
+
     public function user(User $user){
-        return view('user', compact('user'));
+        $posts = $user->posts()->whereNotNull('published_at')->latest()->paginate(12);
+        return view('user',compact(['user','posts']));
+
     }
 }

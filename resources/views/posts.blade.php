@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Posts')
+@section('title','Posts')
 @section('content')
     <h1>Posts</h1>
     {{$posts->links()}}
@@ -10,14 +10,4 @@
             </div>
         @endforeach
     </div>
-
 @endsection
-
-@push('js')
-    <script>
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        })
-    </script>
-@endpush

@@ -13,15 +13,16 @@
             <p class="card-text">{{ $post->snippet }}</p>
         @endif
         <a class="text-muted"><a href="{{route('user', ['user'=> $post->user])}}">{{ $post->user->name }}</a></p>
-        <p class="text-muted">
-            @foreach($post->tags as $tag)
-                <a href="{{route('tag', ['tag' => $tag->name])}}">{{$tag->name}}</a>
-            @endforeach
-        </p>
+            <p class="text-muted">
+                @foreach($post->tags as $tag)
+                    <a href="{{route('tag', ['tag' => $tag->name])}}">{{$tag->name}}</a>
+                @endforeach
+            </p>
 
-        <p class="text-muted" data-bs-toggle="tooltip" title="{{$post->published_at}}">{{ $post->published_at->diffForHumans() }}</p>
-        @unless(isset($isView))
-            <a href="{{route('post', ['post' => $post])}}" class="btn btn-primary">Read more</a>
+            <p class="text-muted" data-bs-toggle="tooltip" title="{{$post->published_at}}">{{ $post->published_at->diffForHumans() }}</p>
+            @unless(isset($isView))
+                <a href="{{route('post', ['post' => $post])}}" class="btn btn-primary">Read more</a>
         @endunless
     </div>
 </div>
+

@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use App\Models\Post;
+use App\Models\User;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Auth;
-
 
 class PostController extends Controller
 {
@@ -21,7 +21,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Auth::user()->posts()->paginate();
-        return view('admin.posts.index', compact('posts'));
+        return view('admin.posts.index',compact('posts'));
     }
 
     /**
@@ -48,8 +48,8 @@ class PostController extends Controller
             $post->published_at = Carbon::now();
         }
         $post->save();
-        if($request->file('image')) {
-            foreach ($request->file('image') as $image) {
+        if($request->file('image')){
+            foreach ($request->file('image') as $image){
                 $path = $image->store('public');
                 $image = new Image();
                 $image->path = $path;
@@ -68,7 +68,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('admin.posts.show',compact('post'));
     }
 
     /**
@@ -79,7 +79,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        return view('admin.posts.edit',compact('post'));
     }
 
     /**
@@ -95,7 +95,7 @@ class PostController extends Controller
         if($request->has('publish')){
             $post->published_at = Carbon::now();
         }
-        $post->save();
+        $post -> save();
         return response()->redirectToRoute('admin.posts.index');
     }
 
@@ -108,10 +108,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if(Auth::user() === $post->user) {
+        if(Auth::user() === $post->user){
             $post->delete();
             return response()->redirectToRoute('admin.posts.index');
         }
         throw(new AuthorizationException());
+
     }
 }

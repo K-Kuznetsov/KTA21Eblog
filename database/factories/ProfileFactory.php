@@ -23,7 +23,7 @@ class ProfileFactory extends Factory
         return [
             'phone' => $phone,
             'bio' => $bio,
-            'birthdate' => $birthdate
+            'birthdate' => $birthdate,
         ];
     }
 }

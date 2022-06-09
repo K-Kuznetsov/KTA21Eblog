@@ -45,6 +45,11 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $posts_count
  * @property-read \App\Models\Profile|null $profile
  * @method static \Illuminate\Database\Eloquent\Builder|User whereSlug($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|User[] $followers
+ * @property-read int|null $followers_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|User[] $follows
+ * @property-read int|null $follows_count
+ * @property-read mixed $am_following
  */
 class User extends Authenticatable
 {
@@ -80,6 +85,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+
     /**
      * Get the options for generating the slug.
      */
@@ -89,6 +98,7 @@ class User extends Authenticatable
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+
     /**
      * Get the route key for the model.
      *
@@ -97,10 +107,6 @@ class User extends Authenticatable
     public function getRouteKeyName()
     {
         return 'slug';
-    }
-
-    public function posts(){
-        return $this->hasMany(Post::class);
     }
 
     public function comments(){
@@ -119,6 +125,6 @@ class User extends Authenticatable
     }
 
     public function getAmFollowingAttribute(){
-        return $this->followers()->where('follower_id', \Auth::user()->id)->exists();
+        return $this->followers()->where('follower_id',\Auth::user()->id)->exists();
     }
 }
